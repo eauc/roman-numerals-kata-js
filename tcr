@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+function success() {
+    notify-send -u normal --expire-time=2000 -i emblem-ok "TESTS OK" "Your work has been saved, for now."
+    git commit -am "WIP-`date`" || true
+}
+
+function failure() {
+    notify-send -u normal --expire-time=2000 -i emblem-important "TESTS FAILED" "Your work has been destroyed, try again."
+    git checkout -- src
+}
+
+npm run test && success || failure
